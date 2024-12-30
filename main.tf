@@ -54,6 +54,7 @@ resource "aws_subnet" "private_subnets" {
 # Key pair (using existing key pair 'WebServer' from AWS account)
 resource "aws_key_pair" "ec2_key" {
   key_name = "WebServer"  # Replace with your key name if different
+  public_key = file("${path.module}/my-key.pub")  
 }
 
 # Security Group for the instances
@@ -96,8 +97,6 @@ data "aws_ami" "debian" {
     values = ["debian-11-amd64-*"]  # Debian 11 (Bullseye) AMI filter
   }
 
-  # Ensure we are using an AMI that's suitable for EC2 instances in Mumbai (ap-south-1)
-  region = "ap-south-1"
 }
 
 # Launch WebServer-1 EC2 instance with Debian
