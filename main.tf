@@ -7,34 +7,27 @@ provider "aws" {
 resource "aws_security_group" "allow_all" {
   name        = "allow_all_sg1"
   description = "Security group with all inbound and outbound traffic allowed"
-# Inbound Rule (Allow SSH on port 22)
+
+  # Allow all inbound traffic
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = 0
+    to_port     = 65535
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Inbound Rule (Allow HTTP on port 80)
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # Outbound Rule (Allow all outbound traffic)
+  # Allow all outbound traffic
   egress {
     from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    to_port     = 65535
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 # Create an EC2 instance
 resource "aws_instance" "my_instance" {
-  ami           = "ami-0fd05997b4dff7aac" # DEBIAN 12 AMI
+  ami           = "ami-064519b8c76274859" # DEBIAN 12 AMI
   instance_type = "t2.micro" # You can adjust the instance size
 
   # Associate the instance with the security group
@@ -44,7 +37,7 @@ resource "aws_instance" "my_instance" {
 
   # To make the instance accessible via SSH (PuTTY requires .ppk format)
   tags = {
-    Name = "MyTerraformEC2Instance1"
+    Name = "Webserver"
   }
 
   # Set the instance to be accessible via SSH
