@@ -27,7 +27,7 @@ resource "aws_security_group" "allow_all" {
 
 # Create an EC2 instance
 resource "aws_instance" "my_instance" {
-  ami           = "ami-064519b8c76274859" # DEBIAN 12 AMI
+  ami           = "ami-0fd05997b4dff7aac" # DEBIAN 12 AMI
   instance_type = "t2.micro" # You can adjust the instance size
 
   # Associate the instance with the security group
